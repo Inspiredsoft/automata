@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="../../main/resources/inspired-fsm.xsd"
+			name="purchaseOrder" start="N" itemName="order" >
+
+	<state name="N" description="New order">
+	
+		<transition to="A" name="approve" description="Approve order">
+			<script>
+				order.number = Math.random();
+				order.approvalDate = new Date();
+			</script>
+		</transition>	
+
+		<transition to="D" name="deny" description="Order denied">
+			<script>
+				order.note ='Order denied';
+				order.cancelDate = new Date();
+			</script>
+		</transition> 
+	
+	</state>
+
+	<state name="A" description="Approved">
+	
+		<transition to="C" name="cancel" description="Cancelled order">
+			<script>
+				order.cancelDate = new Date();
+			</script>
+		</transition>
+		
+		<transition to="P" name="process" description="Processed order">
+			<script>
+				order.processDate = new Date();
+				order.paid = invoice.total;
+			</script>
+		</transition>
+
+	</state>
+	
+</workflow>		
+			
