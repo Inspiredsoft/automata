@@ -1,4 +1,4 @@
-package it.inspired.fsm;
+package it.inspired.automata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,10 @@ public class Transition {
 	/* Arrival state name */
 	private String to;
 	
-	/* Script executed if a transition is fired */
-	private List<Script> scripts = new ArrayList<Script>();
+	private Script condition;
+	
+	/* Actions executed if a transition is fired */
+	private List<Script> actions = new ArrayList<Script>();
 
 	//---------------------------------------------------------------------------
 	
@@ -55,13 +57,22 @@ public class Transition {
 		this.state = state;
 	}
 
-	public void addScript( Script script ) {
-		script.setTransition( this );
-		scripts.add( script );
+	public void addAction( Script action ) {
+		action.setTransition( this );
+		actions.add( action );
 	}
 
-	public List<Script> getScripts() {
-		return this.scripts;
+	public List<Script> getActions() {
+		return this.actions;
+	}
+	
+	public void setCondition( Script condition ) {
+		condition.setTransition( this );
+		this.condition = condition;
+	}
+
+	public Script getCondition() {
+		return this.condition;
 	}
 	
 	//---------------------------------------------------------------------------

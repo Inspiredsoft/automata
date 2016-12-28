@@ -1,6 +1,6 @@
-package it.inspired.fsm.test;
+package it.inspired.automata.test.model;
 
-import it.inspired.fsm.WorkItem;
+import it.inspired.automata.WorkItem;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Order implements WorkItem {
 	private String item;			// Item to order
-	private Double number;			// Approval number
+	private Integer number;			// Approval number
 	private String note;			// Note
 	private Date approvalDate;		// Approval date
 	private Date cancelDate;		// Cancel date
@@ -31,10 +31,10 @@ public class Order implements WorkItem {
 	public void setItem(String item) {
 		this.item = item;
 	}
-	public Double getNumber() {
+	public Integer getNumber() {
 		return number;
 	}
-	public void setNumber(Double number) {
+	public void setNumber(Integer number) {
 		this.number = number;
 	}
 	
@@ -83,13 +83,16 @@ public class Order implements WorkItem {
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder( "Order for " + item );
-		if ( state.equals( "A") ) {
-			str.append( " approved in date " + this.approvalDate );
-		} else if ( state.equals( "D") ) {
+		if ( state.equals( "APPROVED") ) {
+			str.append( " approved in date " + this.approvalDate + " with number " + this.number );
+		
+		} else if ( state.equals( "DENIED") ) {
 			str.append( " denied in date " + this.cancelDate );
-		} else if ( state.equals( "C") ) {
+		
+		} else if ( state.equals( "CANCELLED") ) {
 			str.append( " cancelled in date " + this.cancelDate );
-		} else if ( state.equals( "P") ) {
+		
+		} else if ( state.equals( "PROCESSED") ) {
 			str.append( " processed in date " + this.processDate + " for " + this.paid + " euros" );
 		} 
 		return str.toString();

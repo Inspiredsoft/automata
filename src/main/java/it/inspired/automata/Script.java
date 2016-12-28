@@ -1,4 +1,4 @@
-package it.inspired.fsm;
+package it.inspired.automata;
 
 
 public class Script {

@@ -1,4 +1,4 @@
-package it.inspired.fsm;
+package it.inspired.automata;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package it.inspired.fsm;
+package it.inspired.automata;
 
 /**
  * A class that implement WorkItem interface can be managed by a workflow.

@@ -1,4 +1,4 @@
-package it.inspired.fsm.test;
+package it.inspired.automata.test.model;
 
 import java.math.BigDecimal;
 

@@ -1,4 +1,4 @@
-package it.inspired.fsm;
+package it.inspired.automata;
 
 import groovy.lang.GroovyShell;
 import it.inspired.reflection.Reflection;

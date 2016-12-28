@@ -1,4 +1,4 @@
-package it.inspired.fsm;
+package it.inspired.automata;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -71,11 +71,16 @@ public class WorkflowManagerImpl implements WorkflowManager {
 		digester.addSetProperties( "workflow/state/transition" );
 		digester.addSetNext( "workflow/state/transition", "addTransition" );
 		
-		/* <script> */
-		digester.addObjectCreate( "workflow/state/transition/script", "class", Script.class );
+		/* <condition> */
 		GroovyShell shell = new GroovyShell();
-		digester.addRule( "workflow/state/transition/script", new SetGroovyScriptRule( shell, "code" ) );
-		digester.addSetNext( "workflow/state/transition/script", "addScript" );
+		digester.addObjectCreate( "workflow/state/transition/condition", "class", Script.class );
+		digester.addRule( "workflow/state/transition/condition", new SetGroovyScriptRule( shell, "code" ) );
+		digester.addSetNext( "workflow/state/transition/condition", "setCondition" );
+
+		/* <script> */
+		digester.addObjectCreate( "workflow/state/transition/action", "class", Script.class );
+		digester.addRule( "workflow/state/transition/action", new SetGroovyScriptRule( shell, "code" ) );
+		digester.addSetNext( "workflow/state/transition/action", "addAction" );
 		
 		Collection<File> files = getFiles( new File(pathname), ".fsm.xml" );
 		for( File file : files ) {
@@ -110,6 +115,19 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	//--------------------------------------------------------------------------------------------
 	
 	/* (non-Javadoc)
+	 * @see it.inspired.fsm.WorkflowManager#fire(it.inspired.fsm.State, java.lang.String, it.inspired.fsm.WorkflowContext)
+	 */
+	public void fire( State state, String transitionName, WorkflowContext context ) {
+		Transition transition = state.getTransition( transitionName  );
+		if ( transition == null ) {
+			throw new RuntimeException( "Transition " + transitionName + " undefined on state " + state.getName() );
+		}
+		fire( transition, context );
+	}
+	
+	//--------------------------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
 	 * @see it.inspired.fsm.WorkflowManager#fire(it.inspired.fsm.Transition, it.inspired.fsm.WorkflowContext)
 	 */
 	public void fire( Transition transition, WorkflowContext context ) {
@@ -118,10 +136,11 @@ public class WorkflowManagerImpl implements WorkflowManager {
 			log.debug( "Executing transition " + transition.toString() + " for WorkItem " + context.getItem() );
 		}
 		
+		/* Recover the workflow definition from the state of the transition */
 		Workflow workflow = transition.getState().getWorkflow();
 		
 		/* Script of the transition */
-		if( transition.getScripts().size() > 0 ) {
+		if( transition.getActions().size() > 0 ) {
 
 			Binding binding = new Binding();
 			
@@ -139,11 +158,11 @@ public class WorkflowManagerImpl implements WorkflowManager {
 			binding.setVariable( "context", context );
 			
 			/* execution */
-			Iterator<Script> scripts = transition.getScripts().iterator();
-			while( scripts.hasNext() ) {
-				Script script =(Script)scripts.next();
-				script.getCode().setBinding( binding );
-				script.getCode().run();
+			Iterator<Script> actions = transition.getActions().iterator();
+			while( actions.hasNext() ) {
+				Script action = (Script)actions.next();
+				action.getCode().setBinding( binding );
+				action.getCode().run();
 			}	
 
 		} else {
@@ -160,6 +179,69 @@ public class WorkflowManagerImpl implements WorkflowManager {
 		}
 	}
 	
+	//--------------------------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see it.inspired.automata.WorkflowManager#fire(it.inspired.automata.WorkflowContext)
+	 */
+	public void fire(Workflow workFlow, WorkflowContext context) {
+		/* Get the current state */
+		State state = workFlow.getCurrentState( context.getItem() );
+		
+		/* Iterate over all transition */
+		Iterator<Transition> iterator = state.getTransitions().iterator();
+		
+		while ( iterator.hasNext() ) {
+			Transition transition = iterator.next();
+			if ( evaluateCondition( transition,  context ) ) {
+				if ( log.isDebugEnabled() ) {
+					log.debug( "Firing transition " + transition.getName() + " from workflow " + workFlow.getName() );
+				}
+				fire( transition, context );
+				return;
+			}
+		}
+		throw new RuntimeException( "No transition allowed for state " + state.getName() + " in workflow " + workFlow.getName() );
+	}
+	
+	//--------------------------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see it.inspired.fsm.WorkflowManager#evaluateCondition(it.inspired.fsm.Transition, it.inspired.fsm.WorkflowContext)
+	 */
+	public boolean evaluateCondition(Transition transition, WorkflowContext context) {
+		boolean result = true;
+		
+		if ( transition.getCondition() != null ) {
+			/* Recover the workflow definition from the state of the transition */
+			Workflow workflow = transition.getState().getWorkflow();
+			
+			Binding binding = new Binding();
+			
+			/* Add context attribute to the binding */
+			Iterator<String> attrs = context.keySet().iterator();
+			while( attrs.hasNext() ) {
+				String attrName = (String)attrs.next();
+				binding.setVariable( attrName, context.getAttribute( attrName ) );
+			}
+			
+			/* bind the workflow item and aliases it if defined in the workitem */
+			binding.setVariable( workflow.getItemName() != null ? workflow.getItemName() : "item", context.getItem() );
+			
+			/* context */
+			binding.setVariable( "context", context );
+			
+			/* execution */
+			Script condition = transition.getCondition();
+			condition.getCode().setBinding( binding );
+			result = (Boolean) condition.getCode().run();
+		
+		}
+		return result;
+	}
+	
+	//--------------------------------------------------------------------------------------------
+	// Private Methods
 	//--------------------------------------------------------------------------------------------
 	
 	private Collection<File> getFiles(File path, String suffix) {
@@ -180,4 +262,6 @@ public class WorkflowManagerImpl implements WorkflowManager {
 		}
 		return result;
 	}
+
+	
 }
