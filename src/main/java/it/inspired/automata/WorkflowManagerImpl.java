@@ -102,7 +102,7 @@ public class WorkflowManagerImpl implements WorkflowManager {
 			Binding binding = GroovyUtils.createBuilder( workflow, context );		
 			
 			/* execution */
-			GroovyUtils.evaluate( binding, transition.getActions() );
+			GroovyUtils.execute( binding, transition.getActions() );
 
 		} else {
 			if ( log.isDebugEnabled() ) {
@@ -186,12 +186,11 @@ public class WorkflowManagerImpl implements WorkflowManager {
 			historyItem.setStartTime( extItem.getStateTime() );
 			historyItem.setEndTime( new Date() );
 
-			extItem.setStateTime( historyItem.getStartTime() );
-			extItem.getHistory().add( historyItem );
+			extItem.setStateTime( new Date( historyItem.getEndTime().getTime() + 1 ) );
 		}
 		
 		item.setState( transition.getTo() );
-		return transition.getState().getWorkflow().getCurrentState( item );
+		return transition.getState().getWorkflow().getState( item );
 	}
 	
 }

@@ -49,6 +49,14 @@ public class WorkflowContext extends HashMap<String,Object> {
 	public HistoryItem getHistoryItem() {
 		return historyItem;
 	}
+	
+	/**
+	 * Sets the history item
+	 * @param historyItem The item to set
+	 */
+	public void setHistoryItem( HistoryItem historyItem) {
+		this.historyItem = historyItem;
+	}
 
 	/**
 	 * Set an attribute in the context

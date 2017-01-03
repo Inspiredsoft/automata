@@ -1,25 +1,28 @@
 package it.inspired.automata.test.po.model;
 
-import it.inspired.automata.model.WorkItem;
+import it.inspired.automata.model.ExtendedWorkItem;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * A pUrchase Order
+ * A purchase Order
  * @author Massimo Romano
  *
  */
-public class Order implements WorkItem {
+public class Order implements ExtendedWorkItem {
 	private String item;			// Item to order
 	private Integer number;			// Approval number
 	private String note;			// Note
 	private Date approvalDate;		// Approval date
 	private Date cancelDate;		// Cancel date
 	private Date processDate;		// Procedd date
-	private String state;			// State of the order
 	private BigDecimal paid;		// Total paid for the order
 	
+	/* Inherited from ExtendedWorkItem */
+	private String state;			// State of the order
+	private Date stateTime;			// Starting date of the state
+
 	public Order(){}
 	public Order(String item){
 		this.item = item;
@@ -66,6 +69,13 @@ public class Order implements WorkItem {
 		this.processDate = processDate;
 	}
 	
+	public BigDecimal getPaid() {
+		return paid;
+	}
+	public void setPaid(BigDecimal paid) {
+		this.paid = paid;
+	}
+
 	public String getState() {
 		return state;
 	}
@@ -73,11 +83,11 @@ public class Order implements WorkItem {
 		this.state = state;
 	}
 	
-	public BigDecimal getPaid() {
-		return paid;
+	public Date getStateTime() {
+		return stateTime;
 	}
-	public void setPaid(BigDecimal paid) {
-		this.paid = paid;
+	public void setStateTime(Date stateTime) {
+		this.stateTime = stateTime;
 	}
 	
 	@Override
@@ -97,4 +107,5 @@ public class Order implements WorkItem {
 		} 
 		return str.toString();
 	}
+	
 }

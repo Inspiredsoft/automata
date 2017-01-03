@@ -29,9 +29,9 @@ public interface HistoryItem {
 	
 	/**
 	 * Set the start state of the history
-	 * @param date The date to set
+	 * @param startTime The date to set
 	 */
-	public void setStartTime( Date date );
+	public void setStartTime( Date startTime );
 	
 	/**
 	 * Get the end date of the history
@@ -41,7 +41,7 @@ public interface HistoryItem {
 	
 	/**
 	 * Set the end state of the history
-	 * @param date The date to set
+	 * @param endTime The date to set
 	 */
-	public void setEndTime( Date date );
+	public void setEndTime( Date endTime );
 }

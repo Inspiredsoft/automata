@@ -1,5 +1,6 @@
 package it.inspired.automata.model;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +59,15 @@ public class Workflow {
 	}
 	
 	/**
+	 * Return the state defined in the workflow by item
+	 * @param item The work item in the state required
+	 * @return The state defined in the workflow
+	 */
+	public State getState( WorkItem item ) {
+		return (State)states.get( item.getState() );
+	}
+	
+	/**
 	 * Add a state in the workflow definition
 	 * @param state
 	 */
@@ -80,6 +90,17 @@ public class Workflow {
 			throw new RuntimeException( "Starting state " + this.start + " not defined in the workflow " + this.name );
 		}
 		item.setState( state.getName() );
+		return state;
+	}
+	
+	/**
+	 * Set the starting state defined for the workflow on the given workflow item
+	 * @param item The workflow item 
+	 * @return 
+	 */
+	public State start( ExtendedWorkItem item ) {
+		State state = start( (WorkItem)item );
+		item.setStateTime( Calendar.getInstance().getTime() );
 		return state;
 	}
 	

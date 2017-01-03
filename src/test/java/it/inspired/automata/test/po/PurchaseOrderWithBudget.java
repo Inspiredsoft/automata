@@ -2,10 +2,12 @@ package it.inspired.automata.test.po;
 
 import it.inspired.automata.ClasspathWorkflowManager;
 import it.inspired.automata.WorkflowManager;
+import it.inspired.automata.model.HistoryItem;
 import it.inspired.automata.model.Workflow;
 import it.inspired.automata.model.WorkflowContext;
 import it.inspired.automata.test.po.model.Budget;
 import it.inspired.automata.test.po.model.Order;
+import it.inspired.automata.test.po.model.OrderHistory;
 
 import java.math.BigDecimal;
 
@@ -27,12 +29,15 @@ public class PurchaseOrderWithBudget {
 		 * Generate an new order for a macBook Pro computer
 		 */
 		Order order = new Order("MacBook Pro");
+		HistoryItem history = new OrderHistory();
 		
 		/**
 		 * Create a workflow context for the order and sets the starting state
 		 */
-		WorkflowContext workFlowContext = new WorkflowContext( order );
+		WorkflowContext workFlowContext = new WorkflowContext( order, history );
 		poWorkFlow.start( order );
+		
+		Thread.sleep( 2000 );
 		
 		/**
 		 * Adding budget to the context
@@ -42,6 +47,7 @@ public class PurchaseOrderWithBudget {
 		workflowManager.submit( poWorkFlow, workFlowContext );
 		
 		System.out.println( order );
+		System.out.println( history );
 	}
 
 }

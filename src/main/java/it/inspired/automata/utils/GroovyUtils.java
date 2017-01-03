@@ -55,6 +55,20 @@ public class GroovyUtils {
 	}
 	
 	/**
+	 * Executes all the script in the list 
+	 * @param binding
+	 * @param actions
+	 */
+	public static void execute( Binding binding, List<Script> actions ) {
+		/* execution all actions */
+		Iterator<Script> iterator = actions.iterator();
+		while( iterator.hasNext() ) {
+			Script action = (Script) iterator.next();
+			execute( binding, action );
+		}	
+	}
+
+	/**
 	 * Evaluate a script to boolean
 	 * @param binding
 	 * @param script
@@ -63,20 +77,4 @@ public class GroovyUtils {
 	public static Boolean evaluate( Binding binding, Script script ) {
 		return (Boolean) execute( binding, script );
 	}
-
-	/**
-	 * Executes all the script in the list 
-	 * @param binding
-	 * @param actions
-	 */
-	public static void evaluate( Binding binding, List<Script> actions ) {
-		/* execution all actions */
-		Iterator<Script> iterator = actions.iterator();
-		while( iterator.hasNext() ) {
-			Script action = (Script) iterator.next();
-			evaluate( binding, action );
-		}	
-	}
-	
-	
 }
