@@ -1,6 +1,6 @@
-package it.inspired.automata.test.model;
+package it.inspired.automata.test.po.model;
 
-import it.inspired.automata.WorkItem;
+import it.inspired.automata.model.WorkItem;
 
 import java.math.BigDecimal;
 import java.util.Date;

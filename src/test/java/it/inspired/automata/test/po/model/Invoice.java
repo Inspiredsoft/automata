@@ -1,4 +1,4 @@
-package it.inspired.automata.test.model;
+package it.inspired.automata.test.po.model;
 
 import java.math.BigDecimal;
 

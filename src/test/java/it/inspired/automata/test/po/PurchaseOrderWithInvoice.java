@@ -1,16 +1,16 @@
-package it.inspired.automata.test;
+package it.inspired.automata.test.po;
+
+import it.inspired.automata.ClasspathWorkflowManager;
+import it.inspired.automata.WorkflowManager;
+import it.inspired.automata.model.State;
+import it.inspired.automata.model.Transition;
+import it.inspired.automata.model.Workflow;
+import it.inspired.automata.model.WorkflowContext;
+import it.inspired.automata.test.po.model.Budget;
+import it.inspired.automata.test.po.model.Invoice;
+import it.inspired.automata.test.po.model.Order;
 
 import java.math.BigDecimal;
-
-import it.inspired.automata.State;
-import it.inspired.automata.Transition;
-import it.inspired.automata.Workflow;
-import it.inspired.automata.WorkflowContext;
-import it.inspired.automata.WorkflowManager;
-import it.inspired.automata.WorkflowManagerImpl;
-import it.inspired.automata.test.model.Budget;
-import it.inspired.automata.test.model.Invoice;
-import it.inspired.automata.test.model.Order;
 
 public class PurchaseOrderWithInvoice {
 
@@ -20,7 +20,7 @@ public class PurchaseOrderWithInvoice {
 		 * Generate a new istance of workflow manager and read all the
 		 * fsm.xml file in the classpath
 		 */
-		WorkflowManager workflowManager = new WorkflowManagerImpl();
+		WorkflowManager workflowManager = new ClasspathWorkflowManager();
 		
 		/**
 		 * Get the purchase order workflow definition

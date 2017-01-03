@@ -1,4 +1,5 @@
-package it.inspired.automata;
+package it.inspired.automata.model;
+
 
 /**
  * A class that implement WorkItem interface can be managed by a workflow.
@@ -12,11 +13,11 @@ public interface WorkItem {
 	 * Return the item state 
 	 * @return The current state of the item
 	 */
-	String getState();
+	public String getState();
 	
 	/**
 	 * Set the item state
 	 * @param state The state to set
 	 */
-	void setState( String state );
+	public void setState( String state );
 }

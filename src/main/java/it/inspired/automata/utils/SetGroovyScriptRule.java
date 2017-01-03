@@ -1,4 +1,4 @@
-package it.inspired.automata;
+package it.inspired.automata.utils;
 
 import groovy.lang.GroovyShell;
 import it.inspired.reflection.Reflection;
@@ -6,7 +6,7 @@ import it.inspired.reflection.Reflection;
 import org.apache.commons.digester.SetNestedPropertiesRule;
 
 /**
- * Role to parse the <script> tag
+ * Role to parse the script tag
  * 
  * @author Massimo Romano
  *

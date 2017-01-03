@@ -1,4 +1,4 @@
-package it.inspired.automata;
+package it.inspired.automata.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,13 +72,15 @@ public class Workflow {
 	/**
 	 * Set the starting state defined for the workflow on the given workflow item
 	 * @param item The workflow item 
+	 * @return 
 	 */
-	public void start( WorkItem item ) {
+	public State start( WorkItem item ) {
 		State state = (State) states.get( this.start );
 		if( state == null ) {
 			throw new RuntimeException( "Starting state " + this.start + " not defined in the workflow " + this.name );
 		}
 		item.setState( state.getName() );
+		return state;
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package it.inspired.automata;
+package it.inspired.automata.model;
 
 import java.util.ArrayList;
 import java.util.List;

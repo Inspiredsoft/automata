@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-			xsi:noNamespaceSchemaLocation="../../main/resources/inspired-fsm.xsd"
-			name="purchaseOrder" start="CREATED" itemName="order" >
+<workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../main/resources/inspired-fsm.xsd"
+	name="purchaseOrder" start="CREATED" itemName="order">
 
-	<state name="CREATED" deactionion="New order">
-	
+	<state name="CREATED" description="New order">
+
 		<transition to="APPROVED" name="approve" description="Approve order">
 			<condition>
 				<![CDATA[
@@ -15,7 +15,7 @@
 				order.number = (int)(Math.random()*100000);
 				order.approvalDate = new Date();
 			</action>
-		</transition>	
+		</transition>
 
 		<transition to="DENIED" name="deny" description="Deny order">
 			<condition>
@@ -27,18 +27,18 @@
 				order.note ='Order denied';
 				order.cancelDate = new Date();
 			</action>
-		</transition> 
-	
+		</transition>
+
 	</state>
 
-	<state name="APPROVED" deactionion="Approved">
-	
+	<state name="APPROVED" description="Approved">
+
 		<transition to="CANCELLED" name="cancel" description="Calcel order">
 			<action>
 				order.cancelDate = new Date();
 			</action>
 		</transition>
-		
+
 		<transition to="PROCESSED" name="process" description="Process order">
 			<action>
 				order.processDate = new Date();
@@ -47,6 +47,6 @@
 		</transition>
 
 	</state>
-	
+
 </workflow>		
 			

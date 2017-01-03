@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../main/resources/inspired-fsm.xsd"
+	name="zeroRecognition" start="Even" itemName="machine">
+
+	<state name="Even" description="Even number ov zero">
+		<transition to="Even" name="1" description="Received 1" />
+		<transition to="Odd" name="0" description="Received 0" />
+	</state>
+
+	<state name="Odd" description="Odd number of zero">
+		<transition to="Odd" name="1" description="Received 1" />
+		<transition to="Even" name="0" description="Received 0" />
+	</state>
+</workflow>

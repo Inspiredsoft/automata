@@ -1,4 +1,4 @@
-package it.inspired.automata;
+package it.inspired.automata.model;
 
 import java.util.HashMap;
 
@@ -15,6 +15,7 @@ public class WorkflowContext extends HashMap<String,Object> {
 
 	/* The workflow item associated to the context */
 	private WorkItem item;
+	private HistoryItem historyItem;
 	
 	/**
 	 * Cannot exist a context without the associated workflow item
@@ -25,11 +26,28 @@ public class WorkflowContext extends HashMap<String,Object> {
 	}
 	
 	/**
+	 * Cannot exist a context without the associated workflow item
+	 * @param item The workflow item int the context
+	 */
+	public WorkflowContext(ExtendedWorkItem item, HistoryItem historyItem) {
+		this.item = item;
+		this.historyItem = historyItem;
+	}
+	
+	/**
 	 * Return the item in the current context
 	 * @return The associated workflow item
 	 */
 	public WorkItem getItem() {
 		return item;
+	}
+	
+	/**
+	 * Return the history item associated to the transition
+	 * @return The history item generated
+	 */
+	public HistoryItem getHistoryItem() {
+		return historyItem;
 	}
 
 	/**
