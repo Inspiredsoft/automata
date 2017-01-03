@@ -1,6 +1,6 @@
 # Automata
 
-Automata is a java framework to implement a Finite State machine (https://en.wikipedia.org/wiki/Finite-state_machine).
+Automata is a java framework to implement a [Finite State Machine](https://en.wikipedia.org/wiki/Finite-state_machine).
 
 The project is mantained by Inspired S.r.L. (www.inspiredsoft.it) and Massimo is the Product Manager.
 
