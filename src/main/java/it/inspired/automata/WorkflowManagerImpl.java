@@ -50,6 +50,7 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	
 	public Workflow getWorkflow( String name ) {
 		Workflow flow = (Workflow)workflows.get( name );
+		
 		if( flow == null ) throw new RuntimeException( "Workflow " + name + " undefined" );
 
 		return flow;

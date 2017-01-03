@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../main/resources/inspired-fsm.xsd"
+	name="automaticDoorSystem" start="Closed" itemName="door">
+
+	<state name="Closed" description="Closed door">
+		<transition to="Opened" name="open" description="Open the door">
+			<action>
+				door.ringBell = true;
+			</action>
+		</transition>
+	</state>
+
+	<state name="Opened" description="Open door">
+		<transition to="Closed" name="close" description="Close the door">
+			<action>
+				door.ringBell = false;
+			</action>
+		</transition>
+	</state>
+</workflow>

@@ -43,8 +43,8 @@ public class ZeroRecognition implements WorkItem {
 		
 		for ( int i = 0; i < SEQUENCE.length(); i++ ) {
 			state = manager.fire( state, String.valueOf( SEQUENCE.charAt( i ) ), context );
-			
 		}
+		
 		System.out.println( machine.state );
 				
 	}

@@ -15,6 +15,7 @@ public class ClasspathWorkflowManager extends WorkflowManagerImpl {
 
 	public ClasspathWorkflowManager() throws Exception {
 		super();
+		configure();
 	}
 	
 	//--------------------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ public class ClasspathWorkflowManager extends WorkflowManagerImpl {
 	 * Read all the workflow definition
 	 * @throws Exception
 	 */
-	public void configure() throws Exception {
+	protected void configure() throws Exception {
 		String path = WorkflowManager.class.getResource("/").getPath();
 		
 		if( log.isDebugEnabled() ) { log.debug( "Reading workflow from directory " + path ); }
