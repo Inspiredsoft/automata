@@ -98,7 +98,7 @@ public class Workflow {
 	 * @param item The workflow item 
 	 * @return 
 	 */
-	public State start( ExtendedWorkItem item ) {
+	public State start( ExtendedWorkItem<?> item ) {
 		State state = start( (WorkItem)item );
 		item.setStateTime( Calendar.getInstance().getTime() );
 		return state;

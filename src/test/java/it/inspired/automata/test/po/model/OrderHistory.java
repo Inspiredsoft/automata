@@ -1,5 +1,6 @@
 package it.inspired.automata.test.po.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import it.inspired.automata.model.HistoryItem;
@@ -36,7 +37,8 @@ public class OrderHistory implements HistoryItem {
 	
 	@Override
 	public String toString() {
-		return this.state + " from " + startTime + " to " + endTime;
+		SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy hh:mm:ss" );
+		return this.state + " from " + sdf.format( startTime ) + " to " + sdf.format( endTime );
 	}
 
 }

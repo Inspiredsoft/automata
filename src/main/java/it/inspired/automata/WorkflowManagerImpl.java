@@ -13,6 +13,8 @@ import it.inspired.automata.utils.WorkflowParser;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -172,16 +174,21 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	 * Change the state of the item populating the history item if required
 	 * @param transition The transition to the new state
 	 * @param context The workflow context
-	 * @return 
+	 * @return The new state
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected State changeState(Transition transition, WorkflowContext context ) {
 		WorkItem item = context.getItem();
-		HistoryItem historyItem = context.getHistoryItem();
 		
-		if ( historyItem != null ) {
+		if ( item instanceof ExtendedWorkItem ) {
 			ExtendedWorkItem extItem = (ExtendedWorkItem) item;
 			
-			/* Create the history item */
+			/* Generate a new history item */
+			HistoryItem historyItem = newHistoryItem( extItem );
+			extItem.getHistories().add( historyItem );
+			context.setHistoryItem(historyItem);
+			
+			/* Update the history item */
 			historyItem.setState( extItem.getState() );
 			historyItem.setStartTime( extItem.getStateTime() );
 			historyItem.setEndTime( new Date() );
@@ -191,6 +198,27 @@ public class WorkflowManagerImpl implements WorkflowManager {
 		
 		item.setState( transition.getTo() );
 		return transition.getState().getWorkflow().getState( item );
+	}
+	
+	/**
+	 * Create a new instance of an history item for a workflow item
+	 * @param item The workflow item
+	 * @return The new History Item
+	 */
+	@SuppressWarnings("unchecked")
+	protected <E extends HistoryItem> E newHistoryItem( ExtendedWorkItem<E> item ) {
+		Type type = 
+				((ParameterizedType) item.getClass().getGenericInterfaces()[0])
+				.getActualTypeArguments()[0];
+		
+			try {
+				return (E) Class.forName(type.getTypeName()).newInstance();
+			} catch (InstantiationException | IllegalAccessException
+					| ClassNotFoundException e) {
+				log.error("Error creating history item", e);
+			}
+		
+		return null;
 	}
 	
 }

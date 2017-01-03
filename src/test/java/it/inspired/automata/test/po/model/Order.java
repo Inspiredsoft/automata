@@ -3,14 +3,17 @@ package it.inspired.automata.test.po.model;
 import it.inspired.automata.model.ExtendedWorkItem;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * A purchase Order
  * @author Massimo Romano
  *
  */
-public class Order implements ExtendedWorkItem {
+public class Order implements ExtendedWorkItem<OrderHistory> {
 	private String item;			// Item to order
 	private Integer number;			// Approval number
 	private String note;			// Note
@@ -20,8 +23,9 @@ public class Order implements ExtendedWorkItem {
 	private BigDecimal paid;		// Total paid for the order
 	
 	/* Inherited from ExtendedWorkItem */
-	private String state;			// State of the order
-	private Date stateTime;			// Starting date of the state
+	private String state;													// State of the order
+	private Date stateTime;													// Starting date of the state
+	private List<OrderHistory> histories = new ArrayList<OrderHistory>(); 	// The history of the item
 
 	public Order(){}
 	public Order(String item){
@@ -90,22 +94,26 @@ public class Order implements ExtendedWorkItem {
 		this.stateTime = stateTime;
 	}
 	
+	public List<OrderHistory> getHistories() {
+		return histories;
+	}
+	
 	@Override
 	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy hh:mm:ss" );
 		StringBuilder str = new StringBuilder( "Order for " + item );
 		if ( state.equals( "APPROVED") ) {
-			str.append( " approved in date " + this.approvalDate + " with number " + this.number );
+			str.append( " approved in date " + sdf.format( this.approvalDate ) + " with number " + this.number );
 		
 		} else if ( state.equals( "DENIED") ) {
-			str.append( " denied in date " + this.cancelDate );
+			str.append( " denied in date " + sdf.format( this.cancelDate ) );
 		
 		} else if ( state.equals( "CANCELLED") ) {
-			str.append( " cancelled in date " + this.cancelDate );
+			str.append( " cancelled in date " + sdf.format( this.cancelDate ) );
 		
 		} else if ( state.equals( "PROCESSED") ) {
-			str.append( " processed in date " + this.processDate + " for " + this.paid + " euros" );
+			str.append( " processed in date " + sdf.format( this.processDate  ) + " for " + this.paid + " euros" );
 		} 
 		return str.toString();
 	}
-	
 }
