@@ -19,6 +19,7 @@
 package it.inspired.automata.model;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +67,14 @@ public class Workflow {
 	}
 	
 	//----------------------------------------------------------------------------
+	
+	/**
+	 * Return all the states defined in the workflow
+	 * @return A collection of state
+	 */
+	public Collection<State> getStates() {
+		return states.values();
+	}
 	
 	/**
 	 * Return the state defined in the workflow by name

@@ -56,7 +56,10 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	
 	//--------------------------------------------------------------------------------------------
 	
-	protected void addWorkflow( Workflow workflow ) {
+	/* (non-Javadoc)
+	 * @see it.inspired.automata.WorkflowManager#addWorkflow(it.inspired.automata.model.Workflow)
+	 */
+	public void addWorkflow( Workflow workflow ) {
 		if( workflows.containsKey( workflow.getName() ) ) {
 			throw new RuntimeException( "Workflow " + workflow.getName() + " already defined" );
 		} else {
@@ -68,6 +71,9 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	
 	//--------------------------------------------------------------------------------------------
 	
+	/* (non-Javadoc)
+	 * @see it.inspired.automata.WorkflowManager#getWorkflow(java.lang.String)
+	 */
 	public Workflow getWorkflow( String name ) {
 		Workflow flow = (Workflow)workflows.get( name );
 		

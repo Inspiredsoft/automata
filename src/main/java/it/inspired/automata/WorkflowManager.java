@@ -35,6 +35,12 @@ import it.inspired.automata.model.WorkflowContext;
  *
  */
 public interface WorkflowManager {
+	
+	/**
+	 * Add a new Managed Workflow
+	 * @param workflow The workflow to add
+	 */
+	public void addWorkflow( Workflow workflow );
 
 	/**
 	 * Return a workflow by name
