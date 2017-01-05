@@ -64,6 +64,8 @@ public class AutomaticDoor implements WorkItem {
 		state = manager.fire( openTransition, context );
 		ring( door );
 		
+		Thread.sleep( 1000 );
+		
 		/* Close door signal */
 		Transition closeTransition = state.getTransition( "close" );
 		state = manager.fire( closeTransition, context );		
@@ -78,7 +80,6 @@ public class AutomaticDoor implements WorkItem {
 	private static void ring( AutomaticDoor door ) {
 		if ( door.getRingBell() ) {			
 			System.out.println( "Ringing ...." );
-			try {Thread.sleep( 1000 );} catch (InterruptedException e) {}
 		} else {
 			System.out.println( "Stop ringing ...." );
 		}
