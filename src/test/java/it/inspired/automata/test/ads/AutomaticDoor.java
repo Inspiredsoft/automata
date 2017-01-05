@@ -65,7 +65,7 @@ public class AutomaticDoor implements WorkItem {
 		
 		ring( door );
 		
-		/* Open door signal */
+		/* Close door signal */
 		Transition closeTransition = state.getTransition( "close" );
 		state = manager.fire( closeTransition, context );
 		
