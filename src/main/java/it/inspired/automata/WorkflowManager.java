@@ -55,8 +55,9 @@ public interface WorkflowManager {
 	 * @param file The xml file representing the fsm
 	 * @throws IOException 
 	 * @throws SAXException
+	 * @return The loaded workflow
 	 */
-	public void load( File file ) throws IOException, SAXException;
+	public Workflow load( File file ) throws IOException, SAXException;
 	
 	/**
 	 * Fire a transition on the specified context. 

@@ -24,7 +24,7 @@
 	xsi:noNamespaceSchemaLocation="../../main/resources/inspired-fsm.xsd"
 	name="zeroRecognition" start="Even" itemName="machine">
 
-	<state name="Even" description="Even number ov zero">
+	<state name="Even" description="Even number of zero">
 		<transition to="Even" name="1" description="Received 1" />
 		<transition to="Odd" name="0" description="Received 0" />
 	</state>

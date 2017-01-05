@@ -87,11 +87,13 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	/* (non-Javadoc)
 	 * @see it.inspired.automata.WorkflowManager#load(java.io.File)
 	 */
-	public void load( File file ) throws IOException, SAXException {
+	public Workflow load( File file ) throws IOException, SAXException {
 		if( log.isDebugEnabled() ) log.debug( "Lettura file: " + file );
 		
 		Workflow wf = WorkflowParser.parse(file);
 		this.addWorkflow(wf);
+		
+		return wf;
 	}
 
 	//--------------------------------------------------------------------------------------------

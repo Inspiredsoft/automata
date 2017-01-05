@@ -49,11 +49,10 @@ public class ZeroRecognition implements WorkItem {
 		
 		/* Load the FSM */
 		WorkflowManager manager = new WorkflowManagerImpl();
-		manager.load( new File( FSM_PATH ) );
+		Workflow wf = manager.load( new File( FSM_PATH ) );
 		
 		/* Set the initial state */
 		ZeroRecognition machine = new ZeroRecognition();
-		Workflow wf = manager.getWorkflow( "zeroRecognition" );
 		State state = wf.start( machine );
 			
 		/* Create context */
@@ -63,7 +62,7 @@ public class ZeroRecognition implements WorkItem {
 			state = manager.fire( state, String.valueOf( SEQUENCE.charAt( i ) ), context );
 		}
 		
-		System.out.println( machine.state );
+		System.out.println( machine.state + ": " + state.getDescription() );
 				
 	}
 
