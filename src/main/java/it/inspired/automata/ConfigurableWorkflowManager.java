@@ -19,9 +19,11 @@
 package it.inspired.automata;
 
 import it.inspired.automata.model.Workflow;
+import it.inspired.automata.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -38,6 +40,8 @@ public class ConfigurableWorkflowManager extends WorkflowManagerImpl {
 
 	private final static Log log = LogFactory.getLog( WorkflowManager.class );
 	
+	private static final String SUFFIX = ".fsm.xml";
+	
 	private List<String> paths;
 
 	public List<String> getPaths() {
@@ -53,7 +57,11 @@ public class ConfigurableWorkflowManager extends WorkflowManagerImpl {
 		if ( workflows.isEmpty() ) {
 			for ( String path : paths ) {
 				try {
-					super.load( new File( path ) );
+					Collection<File> files = FileUtils.getFiles( new File( path ), SUFFIX );
+					for( File file : files ) {
+						super.load( file );
+						
+					}
 				} catch (IOException e) {
 					log.error( "Error accessing file " + paths, e );
 				} catch (SAXException e) {

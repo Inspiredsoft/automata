@@ -18,6 +18,8 @@
 
 package it.inspired.automata;
 
+import it.inspired.automata.utils.FileUtils;
+
 import java.io.File;
 import java.net.URL;
 import java.util.Collection;
@@ -44,12 +46,12 @@ public class ClasspathWorkflowManager extends WorkflowManagerImpl {
 	 * @throws Exception
 	 */
 	protected void configure() throws Exception {
-		URL url = Thread.currentThread().getContextClassLoader().getResource( "." );
+		URL url = Thread.currentThread().getContextClassLoader().getResource( "" );
 		String path = url.getPath();
 		
 		if( log.isDebugEnabled() ) { log.debug( "Reading workflow from directory " + path ); }
 		
-		Collection<File> files = getFiles( new File( path ), SUFFIX );
+		Collection<File> files = FileUtils.getFiles( new File( path ), SUFFIX );
 		for( File file : files ) {
 			super.load( file );
 			
@@ -60,23 +62,6 @@ public class ClasspathWorkflowManager extends WorkflowManagerImpl {
 	// Private Methods
 	//--------------------------------------------------------------------------------------------
 	
-	private Collection<File> getFiles(File path, String suffix) {
-		Collection<File> result = new Vector<File>();
-		if( path.isDirectory() ) {
-			String[] filenames = path.list();
-			for( int i = 0; i < filenames.length; i++ ) {
-				File file = new File( path.getAbsolutePath() + File.separator + filenames[ i ] );
 	
-				if( file.getName().endsWith( suffix ) ) {
-					result.add( file );
-				} else if( file.isDirectory() ) {
-					result.addAll( getFiles( file, suffix ) );
-				}
-			}
-		} else {
-			result.add( path );
-		}
-		return result;
-	}
 
 }
