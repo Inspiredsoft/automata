@@ -68,6 +68,10 @@
 		</transition>
 
 	</state>
+	
+	<state name="DENIED" description="Denied"/>
+	<state name="CANCELLED" description="Cancelled"/>
+	<state name="PROCESSED" description="Processed"/>
 
 </workflow>		
 			

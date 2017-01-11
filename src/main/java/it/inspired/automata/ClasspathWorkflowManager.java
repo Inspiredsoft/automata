@@ -19,6 +19,7 @@
 package it.inspired.automata;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Collection;
 import java.util.Vector;
 
@@ -43,7 +44,8 @@ public class ClasspathWorkflowManager extends WorkflowManagerImpl {
 	 * @throws Exception
 	 */
 	protected void configure() throws Exception {
-		String path = WorkflowManager.class.getResource("/").getPath();
+		URL url = Thread.currentThread().getContextClassLoader().getResource( "." );
+		String path = url.getPath();
 		
 		if( log.isDebugEnabled() ) { log.debug( "Reading workflow from directory " + path ); }
 		
