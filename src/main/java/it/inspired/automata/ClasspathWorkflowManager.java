@@ -23,7 +23,6 @@ import it.inspired.automata.utils.FileUtils;
 import java.io.File;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
