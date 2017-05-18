@@ -19,8 +19,8 @@
 package it.inspired.automata.utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 /**
  * I/O Utility 
@@ -30,7 +30,7 @@ import java.util.Vector;
 public class FileUtils {
 	
 	public static Collection<File> getFiles(File path, String suffix) {
-		Collection<File> result = new Vector<File>();
+		Collection<File> result = new ArrayList<File>();
 		if( path.isDirectory() ) {
 			String[] filenames = path.list();
 			for( int i = 0; i < filenames.length; i++ ) {

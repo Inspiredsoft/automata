@@ -38,7 +38,7 @@ public class Workflow {
 	private String start;
 	
 	/* The name of the item managed by the workflow */
-	public String itemName;
+	private String itemName;
 	
 	/* A map of allowed state */
 	private Map<String,State> states = new HashMap<String,State>();
