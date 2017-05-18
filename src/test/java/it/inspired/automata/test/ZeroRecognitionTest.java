@@ -3,7 +3,6 @@ package it.inspired.automata.test;
 import it.inspired.automata.ClasspathWorkflowManager;
 import it.inspired.automata.WorkflowManager;
 import it.inspired.automata.model.State;
-import it.inspired.automata.model.Transition;
 import it.inspired.automata.model.Workflow;
 import it.inspired.automata.model.WorkflowContext;
 import it.inspired.automata.test.recognition.ZeroRecognition;
@@ -19,8 +18,12 @@ public class ZeroRecognitionTest {
 	private Workflow 		workflow 	= null;
 	
 	@Before
-	public void before() throws Exception {
-		manager = new ClasspathWorkflowManager();
+	public void before() {
+		try {
+			manager = new ClasspathWorkflowManager();
+		} catch (Exception e) {
+			Assert.fail();
+		}
 		
 		Assert.assertNotNull( manager );
 		
