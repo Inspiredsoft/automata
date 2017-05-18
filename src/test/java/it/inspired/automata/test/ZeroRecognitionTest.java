@@ -31,29 +31,54 @@ public class ZeroRecognitionTest {
  	
 	@Test
 	public void initialState() {
-		
-		/* Set the initial state */
 		ZeroRecognition item = new ZeroRecognition();
+
 		State state = workflow.start( item );
 		
-		Assert.assertEquals( state.getName(), workflow.getStart() );
+		Assert.assertEquals( state.getName(), "Even" );
 	}
 	
 	@Test
-	public void transition() {
-			
-		/* Set the initial state */
+	public void transitionToOdd() {
 		ZeroRecognition item = new ZeroRecognition();
+		WorkflowContext context = new WorkflowContext( item );
+
 		State state = workflow.start( item );
 		
-		Assert.assertTrue( state.getTransitions().size() > 0 );
+		state = manager.fire( state, "0", context );
 		
+		Assert.assertEquals( state.getName(), "Odd" );
+	}
+	
+	@Test
+	public void transitionToEven() {
+		ZeroRecognition item = new ZeroRecognition();
 		WorkflowContext context = new WorkflowContext( item );
-		Transition transition = state.getTransitions().iterator().next();
+
+		State state = workflow.start( item );
 		
-		state = manager.fire( transition, context );
+		state = manager.fire( state, "1", context );
 		
-		Assert.assertEquals( state.getName(), transition.getTo() );
+		Assert.assertEquals( state.getName(), "Even" );
+	}
+	
+	@Test
+	public void transitionToOddAndEven() {
+		ZeroRecognition item = new ZeroRecognition();
+		WorkflowContext context = new WorkflowContext( item );
+
+		State state = workflow.start( item );
 		
+		state = manager.fire( state, "0", context );
+		
+		Assert.assertEquals( state.getName(), "Odd" );
+		
+		state = manager.fire( state, "1", context );
+		
+		Assert.assertEquals( state.getName(), "Odd" );
+		
+		state = manager.fire( state, "0", context );
+		
+		Assert.assertEquals( state.getName(), "Even" );
 	}
 }
