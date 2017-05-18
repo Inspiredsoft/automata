@@ -6,6 +6,7 @@ import it.inspired.automata.model.State;
 import it.inspired.automata.model.Transition;
 import it.inspired.automata.model.Workflow;
 import it.inspired.automata.model.WorkflowContext;
+import it.inspired.automata.test.recognition.ZeroRecognition;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,8 +33,8 @@ public class ZeroRecognitionTest {
 	public void initialState() {
 		
 		/* Set the initial state */
-		StateMachine machine = new StateMachine();
-		State state = workflow.start( machine );
+		ZeroRecognition item = new ZeroRecognition();
+		State state = workflow.start( item );
 		
 		Assert.assertEquals( state.getName(), workflow.getStart() );
 	}
@@ -42,12 +43,12 @@ public class ZeroRecognitionTest {
 	public void transition() {
 			
 		/* Set the initial state */
-		StateMachine machine = new StateMachine();
-		State state = workflow.start( machine );
+		ZeroRecognition item = new ZeroRecognition();
+		State state = workflow.start( item );
 		
 		Assert.assertTrue( state.getTransitions().size() > 0 );
 		
-		WorkflowContext context = new WorkflowContext( machine );
+		WorkflowContext context = new WorkflowContext( item );
 		Transition transition = state.getTransitions().iterator().next();
 		
 		state = manager.fire( transition, context );
