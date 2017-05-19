@@ -14,13 +14,26 @@ import it.inspired.automata.model.Workflow;
  */
 public class WorkflowBuilder {
 	/* The builded workflow */
-	private Workflow wf = new Workflow();
+	private Workflow workflow = null;
 	private GroovyShell shell = new GroovyShell();
 	
 	/**
 	 * Private constructor
 	 */
 	private WorkflowBuilder() {}
+	
+	/**
+	 * Its the first method to call to update a worlflow
+	 * @param workflow The starting workflow
+	 * @return The builder
+	 */
+	public static WorkflowBuilder fromWorkflow( Workflow workflow ) {
+		WorkflowBuilder builder = new WorkflowBuilder();
+		
+		builder.workflow = workflow;
+		
+		return builder;
+	}
 	
 	/**
 	 * Is the first metod to call that generate the workflow.
@@ -31,8 +44,9 @@ public class WorkflowBuilder {
 	public static WorkflowBuilder newWorkflow( String name, String itemName ) {
 		WorkflowBuilder builder = new WorkflowBuilder();
 		
-		builder.wf.setName( name );
-		builder.wf.setItemName( itemName );
+		builder.workflow = new Workflow();
+		builder.workflow.setName( name );
+		builder.workflow.setItemName( itemName );
 		
 		return builder;
 	}
@@ -51,7 +65,7 @@ public class WorkflowBuilder {
 	 * @return The workflow generated
 	 */
 	public Workflow build() {
-		return wf;
+		return workflow;
 	}
 	
 	/**
@@ -61,12 +75,12 @@ public class WorkflowBuilder {
 	 * @return This builder
 	 */
 	public WorkflowBuilder addStartState( String stateName, String description ) {
-		if ( wf.getStart() != null && !wf.getStart().isEmpty() ) {
+		if ( workflow.getStart() != null && !workflow.getStart().isEmpty() ) {
 			throw new RuntimeException( "the start state is already defined" );
 		}
 		State state = newState( stateName, description  );
-		wf.setStart( stateName );
-		wf.addState( state );
+		workflow.setStart( stateName );
+		workflow.addState( state );
 		return this;		
 	}
 	
@@ -78,7 +92,7 @@ public class WorkflowBuilder {
 	 */
 	public WorkflowBuilder addState( String stateName, String description ) {
 		State state = newState( stateName, description  );
-		wf.addState( state );
+		workflow.addState( state );
 		return this;
 	}
 	
@@ -103,13 +117,13 @@ public class WorkflowBuilder {
 	 * @return This builder
 	 */
 	public WorkflowBuilder addTransition( String name, String description, String startState, String toState ) {
-		State start = wf.getState( startState );
+		State start = workflow.getState( startState );
 		
 		if ( start == null ) {
 			throw new RuntimeException( "The 'start' state " + startState + " is undefined" );
 		}
 		
-		State to = wf.getState( toState );
+		State to = workflow.getState( toState );
 		
 		if ( to == null ) {
 			throw new RuntimeException( "The 'to' state " + toState + " is undefined" );
@@ -169,7 +183,7 @@ public class WorkflowBuilder {
 		State state = new State();
 		state.setName( stateName );
 		state.setDescription( description );
-		state.setWorkflow( wf );
+		state.setWorkflow( workflow );
 		return state;
 	}
 	
@@ -187,7 +201,7 @@ public class WorkflowBuilder {
 	
 	private Transition findTransiton( String name ) {
 		Transition transition = null;
-		for ( State state : wf.getStates() ) {
+		for ( State state : workflow.getStates() ) {
 			transition = state.getTransition( name );
 			if ( transition != null ) {
 				break;

@@ -21,13 +21,14 @@ package it.inspired.automata.test.builder;
 import it.inspired.automata.WorkflowBuilder;
 import it.inspired.automata.WorkflowManager;
 import it.inspired.automata.WorkflowManagerImpl;
+import it.inspired.automata.exception.NoTransitionAllowed;
 import it.inspired.automata.model.State;
 import it.inspired.automata.model.Workflow;
 import it.inspired.automata.model.WorkflowContext;
 
 public class MainBuilder {
 
-	public static void main( String[] args) {
+	public static void main( String[] args) throws NoTransitionAllowed {
 		Workflow wf = WorkflowBuilder
 						.newWorkflow( "testws", "item")
 						.addStartState( "A", "State A" )

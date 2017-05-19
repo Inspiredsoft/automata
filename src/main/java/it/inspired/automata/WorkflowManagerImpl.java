@@ -19,6 +19,7 @@
 package it.inspired.automata;
 
 import groovy.lang.Binding;
+import it.inspired.automata.exception.NoTransitionAllowed;
 import it.inspired.automata.model.ExtendedWorkItem;
 import it.inspired.automata.model.HistoryItem;
 import it.inspired.automata.model.State;
@@ -153,7 +154,7 @@ public class WorkflowManagerImpl implements WorkflowManager {
 	/* (non-Javadoc)
 	 * @see it.inspired.automata.WorkflowManager#fire(it.inspired.automata.WorkflowContext)
 	 */
-	public State submit(Workflow workFlow, WorkflowContext context) {
+	public State submit(Workflow workFlow, WorkflowContext context) throws NoTransitionAllowed {
 		/* Get the current state */
 		State state = workFlow.getCurrentState( context.getItem() );
 		
@@ -169,7 +170,7 @@ public class WorkflowManagerImpl implements WorkflowManager {
 				return fire( transition, context );
 			}
 		}
-		throw new RuntimeException( "No transition allowed for state " + state.getName() + " in workflow " + workFlow.getName() );
+		throw new NoTransitionAllowed( "No transition allowed for state " + state.getName() + " in workflow " + workFlow.getName() );
 	}
 	
 	//--------------------------------------------------------------------------------------------

@@ -18,6 +18,7 @@
 
 package it.inspired.automata;
 
+import it.inspired.automata.exception.NoTransitionAllowed;
 import it.inspired.automata.model.State;
 import it.inspired.automata.model.Transition;
 import it.inspired.automata.model.Workflow;
@@ -82,8 +83,9 @@ public interface WorkflowManager {
 	 * @param workFlow The workflow to use
 	 * @param context A workflow context
 	 * @return The reached state
+	 * @throws NoTransitionAllowed Returned if no transition is allowed
 	 */
-	public State submit( Workflow workFlow, WorkflowContext context );
+	public State submit( Workflow workFlow, WorkflowContext context ) throws NoTransitionAllowed;
 	
 	/**
 	 * Check if the condition of the transition is true or not
