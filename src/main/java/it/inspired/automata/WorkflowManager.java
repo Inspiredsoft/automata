@@ -18,15 +18,12 @@
 
 package it.inspired.automata;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.xml.sax.SAXException;
-
 import it.inspired.automata.model.State;
 import it.inspired.automata.model.Transition;
 import it.inspired.automata.model.Workflow;
 import it.inspired.automata.model.WorkflowContext;
+
+import java.io.File;
 
 /**
  * Interface for a workflow manager
@@ -53,11 +50,10 @@ public interface WorkflowManager {
 	 * Load the finite state machine from the file
 	 * 
 	 * @param file The xml file representing the fsm
-	 * @throws IOException 
-	 * @throws SAXException
+	 * @throws Exception
 	 * @return The loaded workflow
 	 */
-	public Workflow load( File file ) throws IOException, SAXException;
+	public Workflow load( File file ) throws Exception;
 	
 	/**
 	 * Fire a transition on the specified context. 

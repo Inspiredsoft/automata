@@ -29,6 +29,8 @@ import java.util.Collection;
  */
 public class FileUtils {
 	
+	private FileUtils(){}
+	
 	public static Collection<File> getFiles(File path, String suffix) {
 		Collection<File> result = new ArrayList<File>();
 		if( path.isDirectory() ) {

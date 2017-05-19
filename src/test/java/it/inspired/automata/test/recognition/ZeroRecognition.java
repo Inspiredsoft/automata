@@ -18,17 +18,14 @@
 
 package it.inspired.automata.test.recognition;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.xml.sax.SAXException;
-
 import it.inspired.automata.WorkflowManager;
 import it.inspired.automata.WorkflowManagerImpl;
 import it.inspired.automata.model.State;
 import it.inspired.automata.model.WorkItem;
 import it.inspired.automata.model.Workflow;
 import it.inspired.automata.model.WorkflowContext;
+
+import java.io.File;
 
 public class ZeroRecognition implements WorkItem {
 	
@@ -45,7 +42,7 @@ public class ZeroRecognition implements WorkItem {
 		this.state = state;
 	}
 	
-	public static void main( String[] args ) throws IOException, SAXException {
+	public static void main( String[] args ) throws Exception {
 		
 		/* Load the FSM */
 		WorkflowManager manager = new WorkflowManagerImpl();

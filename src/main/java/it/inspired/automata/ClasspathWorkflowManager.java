@@ -48,7 +48,9 @@ public class ClasspathWorkflowManager extends WorkflowManagerImpl {
 		URL url = Thread.currentThread().getContextClassLoader().getResource( "" );
 		String path = url.getPath();
 		
-		if( log.isDebugEnabled() ) { log.debug( "Reading workflow from directory " + path ); }
+		if( log.isDebugEnabled() ) { 
+			log.debug( "Reading workflow from directory " + path ); 
+		}
 		
 		Collection<File> files = FileUtils.getFiles( new File( path ), SUFFIX );
 		for( File file : files ) {
